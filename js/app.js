@@ -27,13 +27,11 @@ $(document).ready(function() {
   var profileRef = database.ref('/profiles');
   var userMessageRef = database.ref('/user-messages');
   var messageDateRef = database.ref('/message-date');
-  var encryptionKeyRef = database.ref('/encryption-keys');
   var purgedAccountIPRef = database.ref('/purged-accounts');
 
   // send new message
   $("#send-msg").click(function() {
 
-    // get the event values from the input elements
     var newMessage = $("#msg").val();
     var messageEkey = $("#e_key_send").val();
 
@@ -50,18 +48,43 @@ $(document).ready(function() {
       // new message
       var newMessage = {
         message: newMessage,
-        e_key: messageEkey,
       };
 
-      // push to the events and usercreatedevents tables 
-      // (they will be created if they aren't there already)
-      userMessageRef.child(loggedUser.id).push(newMessage);
+      // pushes message to db
+      userMessageRef.child(messageEkey).push(newMessage)
 
-      // reset the values so the user doesn't have to if they
-      // want to add another event
+      // reset the values
       $("#msg").val('');
-      $("#e_key_send").val('');
     }
+  });
+
+  $("#de-msg").click(function() {
+
+    // Variables
+    var de_key = $("#e_key_decrypt").val();
+
+    // persistently listen for changes to the events
+    userMessageRef.child(de_key).on('value', function(snapshot) {
+
+    // get a readable value (snapshot is initially sent back as an unreadable object)
+    var snapshotValue = snapshot.val();
+
+    // all of the snapshot keys
+    var keys = Object.keys(snapshotValue);
+
+    $(".chat-message").html("");
+    for (var i = 0; i < keys.length; i++) {
+
+      // append a new list item
+      $(".chat-message").append(`
+        <div class="row">
+          <div class="col-sm-10">
+            ${snapshotValue[keys[i]]['message']}
+          </div>
+        </div>
+        `);
+      }
+    });
   });
 
   // event listener for the login button
@@ -109,29 +132,6 @@ $(document).ready(function() {
           if (!found) {
             loggedUser = addNewUser(result, profileRef);
           }
-          // persistently listen for changes to the events
-          userMessageRef.child(loggedUser.id).on('value', function(snapshot) {
-
-          // get a readable value (snapshot is initially sent back as an unreadable object)
-          var snapshotValue = snapshot.val();
-
-          // all of the snapshot keys
-          var keys = Object.keys(snapshotValue);
-
-          // populate the div with the id 'events-list'
-          $(".chat-message").html("");
-          for (var i = 0; i < keys.length; i++) {
-
-            // append a new list item
-            $(".chat-message").append(`
-              <div class="row">
-                <div class="col-sm-10">
-                  ${snapshotValue[keys[i]]['message']}
-                </div>
-              </div>
-            `);
-            }
-          });
         };
       });
 
