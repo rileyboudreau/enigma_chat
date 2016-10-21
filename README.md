@@ -1,15 +1,11 @@
-# UIT Chat App Skeleton
+# enigmaChat_
 
-## Installation and Operation Instructions
+## Installation Instructions
 
-1. Clone the repo into your desired location via terminal or iTerm2.
+1. Obtain the repo contents from: https://github.com/rileyboudreau/enigma_chat either by clone the repo or downloading the files directly.
 
-   `git clone https://github.com/robmyers82/uitchatappskeleton.git .`
+2. Use the command line and naviagte to the location of the downloaded file. One there run: "python -m SimpleHTTPServer"
 
-2. For Mac, open a command line terminal, move to the desired location using cd, and run a local Python server.
+3. Open your browser (preffereably chrome) and navigate to: "localhost:8000"
 
-   `python -m SimpleHTTPServer`
-
-3. Open a browser (we suggest Chrome!) and navigate to `http://localhost:8000`
-
-**Note:** These instructions only cover Mac installation and deploy. If you are using a Windows machine, you may need to download a web server in order to view the project in a browser.
+**Notice:** Only Mac hosting is covered by these instructions!
