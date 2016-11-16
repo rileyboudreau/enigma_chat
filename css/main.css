@@ -20,6 +20,10 @@ html,body {
   margin-bottom: 10px;
 }
 
+.logo{
+  padding-top: 5px;
+}
+
 /* Sidebar/Navbar */
 
 .sidebar-nav {
@@ -54,6 +58,7 @@ html,body {
   background: grey;
   color: white;
   border-bottom: 1px solid black;
+  padding-top: 10px;
 }
 #repeating_content_area {
   max-height:80%;

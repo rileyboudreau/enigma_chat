@@ -19,9 +19,11 @@ $(document).ready(function() {
 
   // some firebase variables
   var facebookProvider = new firebase.auth.FacebookAuthProvider();
+  var googleProvider = new firebase.auth.GoogleAuthProvider();
   var auth = new firebase.auth();
   var database = new firebase.database();
   var loggedUser = {};
+  var de_key;
 
   // Firebase refs
   var profileRef = database.ref('/profiles');
@@ -34,6 +36,7 @@ $(document).ready(function() {
 
     var newMessage = $("#msg").val();
     var messageEkey = $("#e_key_send").val();
+    var nickName= $("#nick").val();
 
     // do an error check
     if (newMessage == "") {
@@ -42,12 +45,16 @@ $(document).ready(function() {
     if (messageEkey == "") {
       alert("Cannot send messages without an encryption key!");
     }
+    if (nickName == "") {
+      alert("You must have a nickname!");
+    }
     else {
       // error check passes
 
       // new message
       var newMessage = {
         message: newMessage,
+        nickname: nickName,
       };
 
       // pushes message to db
@@ -60,8 +67,11 @@ $(document).ready(function() {
 
   $("#de-msg").click(function() {
 
-    // Variables
-    var de_key = $("#e_key_decrypt").val();
+    // listener variables
+    if (de_key != undefined) {
+     userMessageRef.child(de_key).off('value');
+    }
+    de_key = $("#e_key_decrypt").val();
 
     // persistently listen for changes to the events
     userMessageRef.child(de_key).on('value', function(snapshot) {
@@ -79,7 +89,7 @@ $(document).ready(function() {
       $(".chat-message").append(`
         <div class="row">
           <div class="col-sm-10">
-            ${snapshotValue[keys[i]]['message']}
+            <b>${snapshotValue[keys[i]]['nickname']}:</b> ${snapshotValue[keys[i]]['message']}
           </div>
         </div>
         `);
@@ -87,15 +97,74 @@ $(document).ready(function() {
     });
   });
 
-  // event listener for the login button
-  $("#btn-login").click(function() {
+  $("#btn-logout").click(function() {
+
+    $(".login-window").show();
+    $("#app_content").hide();
+  });
+
+  // event listener for the login button with facebook
+  $("#btn-login-fb").click(function() {
 
     // sign in via popup
     // PRO TIP: remember, .then usually indicates a promise!
     auth.signInWithPopup(facebookProvider).then(function(result) {
 
       $(".login-window").hide();
-      $(".main-window").show();
+      $("#app_content").show();
+      console.log(result);
+
+      // check for your profile
+      profileRef.once("value").then(function(snapshot) {
+
+        // get the snapshot value
+        var snapshotValue = snapshot.val();
+
+        // if no values present, just add the user
+        if (snapshotValue == undefined || snapshotValue == null) {
+          loggedUser = addNewUser(result, profileRef);
+        }
+        else {
+
+          // iterate through the object, and determine if the
+          // profile is present
+          var keys = Object.keys(snapshotValue);
+          var found = false;
+          for (var i = 0; i < keys.length; i++) {
+
+            // accessing objects:
+            // way 1: objectname.objectvalue
+            // way 2: objectname['objectvalue']
+            if (snapshotValue[keys[i]].email == result.user.email) {
+              
+              // found the profile, access it
+              loggedUser = snapshotValue[keys[i]];
+              loggedUser.id = keys[i];
+              found = true;
+            }
+          }
+
+          // profile is not found, add a new one
+          if (!found) {
+            loggedUser = addNewUser(result, profileRef);
+          }
+        };
+      });
+
+    }, function(error) {
+      console.log("Oops! There was an error");
+      console.log(error);
+    });
+  });
+  // event listener for the login button with google
+  $("#btn-login-g").click(function() {
+
+    // sign in via popup
+    // PRO TIP: remember, .then usually indicates a promise!
+    auth.signInWithPopup(googleProvider).then(function(result) {
+
+      $(".login-window").hide();
+      $("#app_content").show();
       console.log(result);
 
       // check for your profile
@@ -145,6 +214,7 @@ $(document).ready(function() {
 // add new user function
 // this is a function because we repeat the process and we don't want
 // to repeat the code
+
 function addNewUser(result, ref) {
     var user = {
         name: result.user.displayName,

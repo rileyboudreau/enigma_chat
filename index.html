@@ -1,15 +1,25 @@
 <body>
- <div id="app_content" class="row main_row fill">
+ <!-- Login button window -->
+  <div class="row login-window">
+    <div class="col-sm-4 col-sm-offset-4">
+      <img src="img/ec.png" alt="ec login logo" class="col-sm-12">
+      <button type="button" id="btn-login-fb" class="btn btn-lg btn-block btn-primary">
+        Login with facebook
+      </button>
+      <button type="button" id="btn-login-g" class="btn btn-lg btn-block btn-danger">
+        Login with Google
+      </button>
+    </div>
+  </div>
+
+ <div id="app_content" class="row fill main_row" style="display:none;">
    
     <div class="col-sm-2 sidebar-nav">
       <ul class="nav nav-list"> 
-	    <h1>LOGO</h1>
+	    <img src="img/ecapp.png" alt="ec app logo" class="col-sm-12 logo">
         <li class="nav-header">Navigation</li>
-        <button type="button" id="btn-login" class="btn btn-block btn-primary btn-props">Login</button>     
-        <li class="active"><a href="#"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
-        <li><a href="#"><i class="glyphicon glyphicon-user"></i> Account</a></li>
-        <li><a href="#"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
-	      <li><a href="#"><i class="glyphicon glyphicon-fire"></i> Logout & Purge Account</a></li>
+        <button type="button" id="btn-logout" class="btn btn-block btn-danger btn-props">Logout</button>
+        <p>Welcome to enigmaChat_! enigmaChat_ offers safe and easy chat between you and your collegues! When you send your message you must do so with an encryption key. This prevents others without the key from viewing your chat! To begin viewing messages with sent on a particular key simply enter it in the deryption key box and click decrypt! Thanks and enjoy using enigmaChat_!   
       </ul>
 	</div>
    
@@ -19,7 +29,6 @@
      <!-- This element is the header for the main chat area. -->
      <div id="chat_header" class="row">
        <div id="userMessage" class="col-sm-12">
-         <h3>This is my header</h3>
 			<div class="col-sm-10 e_keyinput_decrypt">
 			  <input type="password" class="form-control" id="e_key_decrypt" placeholder="Decryption Key">
 			</div>
@@ -34,8 +43,7 @@
        
        <!-- These elements would be chat messages. They could repeat programatically based on content. -->
        <div class="chat-message col-sm-12">
-         <p>jnbcihlsknjdfiunc</p>
-		     <p>That was an encrypted message</p>
+         <p>In order to view messages please enter a decryption key.</p>
        </div>
      </div>
      
@@ -44,7 +52,10 @@
 	   <div class="col-sm-12 e_keyinput_send">
 		 <input type="password" class="form-control" id="e_key_send" placeholder="Encryption Key">
 	   </div>
-       <div class="col-sm-11">
+      <div class="col-sm-2">
+         <input type="text" class="form-control" id="nick" placeholder="Nickname">
+       </div>
+       <div class="col-sm-9">
          <input type="text" class="form-control" id="msg" placeholder="Message">
        </div>
        <div class="col-sm-1">
