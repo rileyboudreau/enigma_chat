@@ -2,18 +2,21 @@ html,body {
   height:100%;
   background-color:#000;
 }
+
 .main-row {
-  margin-left:0;
-  margin-right:0;
+  margin: 0px;
 }
+
 .fill {
   width:100%;
   height:100%;
   min-height:100%;
   padding:0px;
 }
+
 .e_keyinput_decrypt {
   padding-bottom: 10px;
+  padding-left: 10px;
 }
 
 .btn-props{
@@ -23,29 +26,6 @@ html,body {
 .logo{
   padding-top: 5px;
 }
-
-/* Sidebar/Navbar */
-
-.sidebar-nav {
-	  height:100%;
-    min-height:100%;
-	  background-color: #DCDCDC;
-    padding-left: 30px;
-}
-.nav.nav-list a {
-    padding: 5px 10px;
-}
-.nav-list > .active > a, .nav-list > .active > a:hover, .nav-list > .active > a:focus {
-    background-color: #428BCA;
-    color: #FFFFFF;
-}
-
-.nav-header {
-    color: darkgrey;
-    font-weight: bold;
-}
-
-/* END Sidebar/Navbar */
 
 #chat_content
 {
