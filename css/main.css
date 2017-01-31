@@ -59,7 +59,6 @@ body {
   width: 100%;
   height: 100%;
   font-family: 'Alegreya Sans SC', "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: white;
   background-color: #2B2A2B;
  }
 
@@ -121,7 +120,7 @@ html,body {
 }
 
 .chat_message {
-  padding:.5em;
+  padding-top: 75px;
   border-bottom: 1px dotted black;
 }
 #chat_footer {

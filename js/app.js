@@ -1,6 +1,3 @@
-
-/*	ENTER YOUR APP'S JAVASCRIPT CODE HERE!	*/
-
 // this function fires at the ready state, which is when the DOM is
 // ready for Javascript to execute
 $(document).ready(function() {
