@@ -101,6 +101,8 @@ html,body {
   background: #fff;
   height:100%;
   min-height:100%;
+  margin-top: 70px;
+  padding: 5px;
 }
 
 #chat_header {
