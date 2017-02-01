@@ -28,6 +28,12 @@ $(document).ready(function() {
   var messageDateRef = database.ref('/message-date');
   var purgedAccountIPRef = database.ref('/purged-accounts');
 
+  $("#msg").keyup(function(event){
+    if(event.keyCode == 13){
+        $("#send-msg").click();
+      }
+  });
+
   // send new message
   $("#send-msg").click(function() {
 
