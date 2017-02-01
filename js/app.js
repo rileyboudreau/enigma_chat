@@ -86,7 +86,7 @@ $(document).ready(function() {
       $(".chat-message").append(`
         <div class="row">
           <div class="col-sm-10">
-            <b>${snapshotValue[keys[i]]['nickname']}:</b> ${snapshotValue[keys[i]]['message']}
+            <p><b>${snapshotValue[keys[i]]['nickname']}:</b> ${snapshotValue[keys[i]]['message']}</p>
           </div>
         </div>
         `);
